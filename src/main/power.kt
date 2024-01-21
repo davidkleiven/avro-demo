@@ -28,17 +28,21 @@ data class Generator(
     }
 }
 
-fun generatorsToBytes(generators: List<Generator>): ByteArray {
+fun generatorsToBytes(generators: List<Generator>, serializationSchema: Schema): ByteArray {
     val stream = ByteArrayOutputStream()
-    val generatorSchema = Avro.default.schema(Generator.serializer())
     val os = Avro.default.openOutputStream(Generator.serializer()) {
         encodeFormat = AvroEncodeFormat.Binary
-        schema = generatorSchema
+        schema = serializationSchema
     }.to(stream)
 
     os.write(generators)
     os.flush()
     return stream.toByteArray()
+}
+
+fun generatorsToBytes(generators: List<Generator>): ByteArray {
+    val generatorSchema = Avro.default.schema(Generator.serializer())
+    return generatorsToBytes(generators, generatorSchema)
 }
 
 fun generatorsFromBytes(data: ByteArray): Sequence<Generator> {

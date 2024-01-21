@@ -1,0 +1,26 @@
+{
+  "type": "record",
+  "namespace": "com.external.schema",
+  "name": "generator",
+  "fields": [
+    {
+      "name": "mrid",
+      "type": "string"
+    },
+    {
+      "name": "power",
+      "type": "float"
+    },
+    {
+      "name": "startTime",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "isValid",
+      "type": "boolean"
+    }
+  ]
+}
